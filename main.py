@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from routes.session import router as session_router
+from routes.questions import router as questions_router
 from database import questions_collection, sessions_collection
 from services.ai_insights import generate_study_plan
 
@@ -11,6 +12,7 @@ app = FastAPI(
 
 # Register routes
 app.include_router(session_router)
+app.include_router(questions_router)
 
 @app.get("/")
 def root():
