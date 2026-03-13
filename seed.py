@@ -1,3 +1,6 @@
+from dotenv import load_dotenv
+load_dotenv()
+
 from database import questions_collection
 import uuid
 
