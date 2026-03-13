@@ -2,6 +2,7 @@ from fastapi import APIRouter, HTTPException
 from database import questions_collection, sessions_collection
 from services.adaptive import update_ability, select_next_question
 import uuid
+from pydantic import BaseModel
 
 router = APIRouter()
 
@@ -37,9 +38,16 @@ def start_session():
     }
 
 
+class AnswerRequest(BaseModel):
+    session_id: str
+    question_id: str
+    answer: str
+
 @router.post("/session/answer")
-def submit_answer(session_id: str, question_id: str, answer: str):
-    """Submit an answer and get the next question"""
+def submit_answer(request: AnswerRequest):
+    session_id = request.session_id
+    question_id = request.question_id
+    answer = request.answer
     
     # Get session
     session = sessions_collection.find_one({"session_id": session_id})
