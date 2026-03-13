@@ -48,3 +48,11 @@ def get_report(session_id: str):
         "topics_missed": session["topics_missed"],
         "study_plan": study_plan
     }
+
+@app.get("/health")
+def health_check():
+    return {
+        "status": "healthy",
+        "database": "connected",
+        "version": "1.0.0"
+    }
