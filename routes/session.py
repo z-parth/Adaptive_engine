@@ -45,6 +45,8 @@ class AnswerRequest(BaseModel):
 
 @router.post("/session/answer")
 def submit_answer(request: AnswerRequest):
+    if not request.answer.strip():
+        raise HTTPException(status_code=400, detail="Answer cannot be empty")
     session_id = request.session_id
     question_id = request.question_id
     answer = request.answer
